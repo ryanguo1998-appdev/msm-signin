@@ -15,6 +15,20 @@
   </head>
 
   <body>
+    <nav>
+      <ul>
+        <% if session[:user_id].blank? %>
+          <li><a href="/user_sign_in">Sign In</a></li>
+          <li><a href="/user_sign_up">Sign Up</a></li>
+        <% else %>
+          <li><a href="/user_sign_out">Sign out</a></li>
+          <li><a href="/bookmarks">My bookmarks</a></li>
+        <% end %>
+        <li><a href="/">Home</a></li>
+      </ul>
+    </nav>
+    <%= notice %>
+    <%= alert %>
     <%= yield %>
   </body>
 </html>

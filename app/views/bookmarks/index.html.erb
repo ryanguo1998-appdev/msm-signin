@@ -1,0 +1,70 @@
+<div>
+  <div>
+    <h1>
+      <%= @the_username %>'s bookmarks
+    </h1>
+  </div>
+</div>
+
+<hr>
+
+<% bookmark_title_array = [] %>
+<% @list_of_bookmarks.each do |a_bookmark| %>
+  <% bookmark_title_array.push(a_bookmark.movie.title)%>
+<% end %>
+
+<div>
+  <form action="/insert_bookmark" method="post">
+    <select name="query_movie_id">
+    <% Movie.all.each do |the_movie| %>
+      <% if bookmark_title_array.exclude?(the_movie.title)%>
+        <option value=<%= the_movie.id %>> 
+          <%= the_movie.title %> 
+        </option> 
+        <% end %> 
+    <% end %>
+    </select>
+    <button>Bookmark this movie!</button>
+  </form>
+</div>
+
+<hr>
+<div>
+  <div>
+    <table>
+      <tr>
+        <th>
+          Movie
+        </th>
+
+        <th>
+          Created at
+        </th>
+
+        <th>
+        </th>
+      </tr>
+
+      <% @list_of_bookmarks.each do |a_bookmark| %>
+      <tr>
+
+        <td>
+          <a href="/movies/<%= a_bookmark.movie.id %>"><%= a_bookmark.movie.title %>
+        </td>
+
+        <td>
+          <%= time_ago_in_words(a_bookmark.created_at) %> ago
+        </td>
+
+        <td>
+          <a href="/delete_bookmark/<%= a_bookmark.id %>">
+            Un-bookmark
+          </a>
+        </td>
+      </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
+
+<hr>
